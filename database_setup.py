@@ -15,6 +15,15 @@ class Restaurant(Base):
     name = Column(String(250), nullable=False)
 
 
+# Serialize data elements
+    @property
+    def serialize(self):
+
+        return {
+            'name': self.name,
+        }
+
+
 class MenuItem(Base):
     __tablename__ = 'menu_item'
 

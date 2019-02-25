@@ -16,6 +16,29 @@ def connectdb():
     return session
 
 
+@app.route('/restaurants/JSON/')
+def restaurantsJSON():
+    session = connectdb()
+    items = session.query(Restaurant).all()
+    return jsonify(Restaurants=[i.serialize for i in items])
+
+
+@app.route('/restaurant/<int:restaurant_id>/menu/JSON/')
+def restaurantMenuJSON(restaurant_id):
+    session = connectdb()
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    items = session.query(MenuItem).filter_by(restaurant_id=restaurant.id)
+    return jsonify(MenuItems=[i.serialize for i in items])
+
+
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON/')
+def restaurantMenuItemJSON(restaurant_id, menu_id):
+    session = connectdb()
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    item = session.query(MenuItem).filter_by(restaurant_id=restaurant.id, id=menu_id).one()
+    return jsonify(MenuItem=[item.serialize])
+
+
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
@@ -102,6 +125,8 @@ def editMenuItem(restaurant_id, menu_id):
             item.description = request.form['description']
         if len(request.form['price']) > 0:
             item.price = request.form['price']
+        if len(request.form['course']) > 0:
+            item.course = request.form['course']
         session.add(item)
         session.commit()
         flash("menu item updated!")
