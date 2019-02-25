@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
-
+<head>
+    <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css')}}">
+</head>
 <body>
-
+<div class="pane">
 <h1>Edit menu item</h1>
-
 <form action=""{{url_for('editMenuItem', restaurant_id=restaurant_id, menu_id=menu_id)}}"" method='POST'>
-
 <p>Name:</p>
     <input type='text' size='30' name='name' placeholder='{{item.name}}'>
 <p>Description:</p>
@@ -35,10 +35,8 @@
         <input type="radio" name="course" value="Beverage">Beverage<br><br>
     {%endif%}
     <input type='submit' value='Edit'>
-
 </form>
 <a href='{{url_for('showMenu', restaurant_id=restaurant_id)}}'>Cancel</a>
-
+</div>
 </body>
-
 </html>

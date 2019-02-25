@@ -66,6 +66,7 @@ def newRestaurant():
         newRestaurant = Restaurant(name = request.form['name'])
         session.add(newRestaurant)
         session.commit()
+        flash("new restaurant created")
         return redirect(url_for('showRestaurants'))
     return render_template('newRestaurant.html')
 
@@ -80,6 +81,7 @@ def editRestaurant(restaurant_id):
             item.name = request.form['name']
         session.add(item)
         session.commit()
+        flash("restaurant edited")
         return redirect(url_for('showRestaurants'))
     return render_template('editRestaurant.html', item=item)
 
@@ -92,6 +94,7 @@ def deleteRestaurant(restaurant_id):
     if request.method == 'POST':
         session.delete(item)
         session.commit()
+        flash("restaurant deleted")
         return redirect(url_for('showRestaurants'))
     return render_template('deleteRestaurant.html', item=item)
 
@@ -108,6 +111,7 @@ def newMenuItem(restaurant_id):
         session = connectdb()
         session.add(newItem)
         session.commit()
+        flash("new menu item created")
         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
@@ -129,13 +133,12 @@ def editMenuItem(restaurant_id, menu_id):
             item.course = request.form['course']
         session.add(item)
         session.commit()
-        flash("menu item updated!")
+        flash("menu item edited")
         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=item)
 
 
-# *********wa3449
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
     """delete menu item"""
@@ -144,7 +147,7 @@ def deleteMenuItem(restaurant_id, menu_id):
     if request.method == 'POST':
         session.delete(menuItem)
         session.commit()
-        flash("menu item deleted!")
+        flash("menu item deleted")
         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         return render_template('deletemenuitem.html', item=menuItem)

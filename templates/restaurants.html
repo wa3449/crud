@@ -1,15 +1,12 @@
 <!doctype html>
 <html>
-<!--
 <head>
     <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css')}}">
 </head>
--->
 <body>
-
+<div class="pane">
 <h1>Restaurants</h1>
 
-<!--
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -19,9 +16,8 @@
             </ul>
         {% endif %}
     {% endwith %}
--->
 
-<a href='{{url_for('newRestaurant')}}'>Create a new restaurant</a>
+<a href='{{url_for('newRestaurant')}}'>New Restaurant</a>
 </br>
 
 {% for i in items %}
@@ -41,6 +37,6 @@
 
 
 {% endfor %}
+</div>
 </body>
-
 </html>
